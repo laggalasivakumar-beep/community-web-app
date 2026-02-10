@@ -1,16 +1,19 @@
-const express = require("express");
-const cors = require("cors");
+import express from "express";
+import cors from "cors";
+import nodemailer from "nodemailer";
+import pkg from "pg";
+
+const { Pool } = pkg;
 
 const app = express();
-
 app.use(cors());
 app.use(express.json());
 
-app.get("/", (req, res) => {
-  res.send("Backend API running");
-});
-
-const PORT = 5000;
-app.listen(PORT, () => {
-  console.log(`Server running on port ${PORT}`);
+// 🔥 DATABASE CONNECTION
+const pool = new Pool({
+  user: "postgres",
+  host: "localhost",
+  database: "jobportal",
+  password: "admin123",
+  port: 5432,
 });
