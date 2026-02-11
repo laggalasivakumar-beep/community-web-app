@@ -1,7 +1,7 @@
 import { Link } from "react-router-dom";
 
 const Footer = () => {
-  const logoUrl = "/communityhub-logo-1.png"; // same logo as header
+  const logoUrl = "/community.png"; // same logo as header
 
   return (
     <footer style={styles.footer}>
