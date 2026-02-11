@@ -8,7 +8,7 @@ const Header = () => {
       {/* Logo */}
       <div style={styles.logoContainer}>
         <img
-          src="/src/assets/communityhub-logo 1.png"
+          src="/communityhub-logo-1.png"
           alt="Logo"
           style={styles.logo}
         />
