@@ -110,7 +110,7 @@ const Jobs = () => {
   margin-left: calc(-50vw + 50%); /* stretch full width while keeping content centered */
   background: linear-gradient(135deg, #0f766e, #16a34a);
   color: white;
-  padding: 60px 30px 40px 30px;
+  padding:70px 30px 70px 80px ;
   text-align: left;
   border-radius: 0; /* optional: remove rounded corners for full-width */
   margin-bottom: 30px;

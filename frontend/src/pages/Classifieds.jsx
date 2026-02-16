@@ -16,16 +16,14 @@ const Classifieds = () => {
     try {
       const nowIso = new Date().toISOString();
 
-      let query = supabase
+      const { data, error } = await supabase
         .from("classifieds")
         .select("*")
         .eq("status", "approved")
         .gt("expires_at", nowIso)
         .order("created_at", { ascending: false });
 
-      const { data, error } = await query;
       if (error) throw error;
-
       setAds(data || []);
     } catch (e) {
       console.error(e);
@@ -59,6 +57,22 @@ const Classifieds = () => {
     });
   }, [ads, q, category]);
 
+  // ✅ helper: YouTube embed url (normal link -> embed)
+  const toEmbedUrl = (url = "") => {
+    try {
+      const u = new URL(url);
+      const vid = u.searchParams.get("v");
+      if (vid) return `https://www.youtube.com/embed/${vid}`;
+      if (u.hostname.includes("youtu.be")) {
+        const id = u.pathname.replace("/", "");
+        return id ? `https://www.youtube.com/embed/${id}` : url;
+      }
+      return url;
+    } catch {
+      return url;
+    }
+  };
+
   return (
     <>
       {/* HERO */}
@@ -71,7 +85,12 @@ const Classifieds = () => {
             <button className="btnPrimary" onClick={() => nav("/my-classifieds")}>
               Post a Classified
             </button>
-            <button className="btnGhost" onClick={() => document.getElementById("listings")?.scrollIntoView({ behavior: "smooth" })}>
+            <button
+              className="btnGhost"
+              onClick={() =>
+                document.getElementById("listings")?.scrollIntoView({ behavior: "smooth" })
+              }
+            >
               Browse Listings
             </button>
           </div>
@@ -113,50 +132,94 @@ const Classifieds = () => {
           </div>
         )}
 
+        {/* ✅ Card Grid */}
         <div className="grid">
-          {filtered.map((ad) => (
-            <div className="card" key={ad.id}>
-              <div className="cardTop">
-                <div className="title">{ad.title}</div>
-                <div className="price">{ad.price ? `$${ad.price}` : "NA"}</div>
-              </div>
+          {filtered.map((ad) => {
+            const showImage = ad.media_type === "image" && ad.media_url;
+            const showVideo = ad.media_type === "video" && ad.youtube_url;
 
-              <div className="meta">
-                <span className="tag">{ad.category}</span>
-                <span className="tag">{ad.sub_category}</span>
-                <span className="tag mutedTag">
-                  {ad.city} • {ad.zip_code}
-                </span>
-              </div>
+            return (
+              <div className="adCard" key={ad.id}>
+                {/* ✅ ONLY ONE MEDIA BOX */}
+                <div className="mediaBox">
+                  {showImage ? (
+                    <img src={ad.media_url} alt={ad.title || "Classified"} />
+                  ) : showVideo ? (
+                    <iframe
+                      src={toEmbedUrl(ad.youtube_url)}
+                      title={ad.title || "Video"}
+                      allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                      allowFullScreen
+                    />
+                  ) : (
+                    <div className="mediaFallback">
+                      <div className="fallbackTitle">{ad.category || "Classified"}</div>
+                      <div className="fallbackSub">No media uploaded</div>
+                    </div>
+                  )}
 
-              <div className="desc">{ad.description}</div>
-
-              <div className="footer">
-                <div className="small">
-                  Contact: <b>{ad.contact_name}</b> • {ad.contact_phone}
+                  <div className="mediaBadges">
+                    <span className="badge">{ad.category}</span>
+                    {ad.sub_category ? (
+                      <span className="badge ghost">{ad.sub_category}</span>
+                    ) : null}
+                  </div>
                 </div>
 
-                {/* Optional: show youtube link if video */}
-                {ad.media_type === "video" && ad.youtube_url ? (
-                  <a className="link" href={ad.youtube_url} target="_blank" rel="noreferrer">
-                    Watch Video
-                  </a>
-                ) : null}
+                {/* BODY */}
+                <div className="body">
+                  <div className="rowTop">
+                    <div className="title">{ad.title}</div>
+                    <div className="price">{ad.price ? `$${ad.price}` : "NA"}</div>
+                  </div>
+
+                  <div className="meta">
+                    <span className="metaTag">
+                      {ad.city} • {ad.zip_code}
+                    </span>
+                    <span className="metaTag">
+                      {ad.region} • {ad.state}
+                    </span>
+                  </div>
+
+                  <div className="desc">{ad.description}</div>
+
+                  <div className="bottom">
+                    <div className="contact">
+                      <div className="contactTitle">Contact</div>
+                      <div className="contactLine">
+                        <b>{ad.contact_name}</b> • {ad.contact_phone}
+                      </div>
+                      {ad.contact_email ? (
+                        <div className="contactLine">{ad.contact_email}</div>
+                      ) : null}
+                      {ad.contact_whatsapp ? (
+                        <div className="contactLine">WhatsApp: {ad.contact_whatsapp}</div>
+                      ) : null}
+                    </div>
+
+                    {showVideo ? (
+                      <a className="cta" href={ad.youtube_url} target="_blank" rel="noreferrer">
+                        Watch on YouTube →
+                      </a>
+                    ) : null}
+                  </div>
+                </div>
               </div>
-            </div>
-          ))}
+            );
+          })}
         </div>
       </section>
 
       {/* STYLES */}
       <style>{`
         .hero{
-          padding: 90px 20px;
-          background: linear-gradient(135deg,#111827,#2563eb);
+          padding:70px 30px 70px 0px ;
+          background: linear-gradient(135deg, #0f9d58, #0c7c46);
           color: #fff;
         }
         .heroInner{
-          max-width: 1000px;
+          max-width: 1100px;
           margin: 0 auto;
         }
         .hero h1{
@@ -208,10 +271,8 @@ const Classifieds = () => {
           gap: 12px;
           flex-wrap: wrap;
         }
-        .topRow h2{
-          margin: 0;
-          color: #111827;
-        }
+        .topRow h2{ margin: 0; color: #111827; }
+
         .controls{
           display: flex;
           gap: 10px;
@@ -241,65 +302,152 @@ const Classifieds = () => {
           max-width: 1100px;
           margin: 14px auto 0 auto;
           display: grid;
-          grid-template-columns: repeat(auto-fill, minmax(290px, 1fr));
-          gap: 12px;
+          grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+          gap: 14px;
         }
-        .card{
+
+        .adCard{
           background: #fff;
           border: 1px solid #e5e7eb;
-          border-radius: 14px;
-          padding: 14px;
+          border-radius: 16px;
+          overflow: hidden;
           box-shadow: 0 10px 26px rgba(0,0,0,0.06);
+          transition: transform 0.25s ease, box-shadow 0.25s ease;
         }
-        .cardTop{
-          display: flex;
-          justify-content: space-between;
-          gap: 10px;
-          align-items: baseline;
+        .adCard:hover{
+          transform: translateY(-4px);
+          box-shadow: 0 18px 40px rgba(0,0,0,0.12);
         }
-        .title{ font-weight: 900; color: #111827; }
-        .price{ font-weight: 900; color: #111827; }
-        .meta{
-          margin-top: 8px;
+
+        .mediaBox{
+          position: relative;
+          width: 100%;
+          height: 190px;
+          background: #111827;
+        }
+        .mediaBox img{
+          width: 100%;
+          height: 100%;
+          object-fit: cover;
+          display: block;
+        }
+        .mediaBox iframe{
+          width: 100%;
+          height: 100%;
+          border: 0;
+          display: block;
+        }
+
+        .mediaFallback{
+          width: 100%;
+          height: 100%;
           display: flex;
+          flex-direction: column;
+          justify-content: center;
+          align-items: center;
+          color: #e5e7eb;
+          background: linear-gradient(135deg,#111827,#374151);
+        }
+        .fallbackTitle{ font-weight: 900; }
+        .fallbackSub{ opacity: 0.8; font-size: 12px; margin-top: 6px; }
+
+        .mediaBadges{
+          position: absolute;
+          left: 12px;
+          bottom: 12px;
+          display: flex;
+          gap: 8px;
           flex-wrap: wrap;
-          gap: 6px;
         }
-        .tag{
+
+        .badge{
           font-size: 11px;
-          padding: 5px 8px;
+          padding: 6px 10px;
           border-radius: 999px;
-          background: #f3f4f6;
+          background: rgba(255,255,255,0.92);
           color: #111827;
           font-weight: 900;
         }
-        .mutedTag{
-          background: #eef2ff;
-          color: #3730a3;
+        .badge.ghost{
+          background: rgba(17,24,39,0.78);
+          color: #fff;
         }
+
+        .body{ padding: 14px; }
+
+        .rowTop{
+          display: flex;
+          justify-content: space-between;
+          align-items: baseline;
+          gap: 10px;
+        }
+        .title{
+          font-weight: 900;
+          color: #111827;
+          font-size: 15px;
+          line-height: 1.2;
+        }
+        .price{
+          font-weight: 900;
+          color: #111827;
+          white-space: nowrap;
+        }
+
+        .meta{
+          margin-top: 10px;
+          display: flex;
+          gap: 8px;
+          flex-wrap: wrap;
+        }
+        .metaTag{
+          font-size: 11px;
+          padding: 6px 10px;
+          border-radius: 999px;
+          background: #f3f4f6;
+          color: #111827;
+          font-weight: 800;
+        }
+
         .desc{
           margin-top: 10px;
           font-size: 13px;
           color: #374151;
-          line-height: 1.5;
-          min-height: 58px;
+          line-height: 1.55;
+          min-height: 52px;
           white-space: pre-wrap;
         }
-        .footer{
+
+        .bottom{
           margin-top: 12px;
           display: flex;
           justify-content: space-between;
-          gap: 10px;
-          align-items: center;
+          gap: 12px;
+          align-items: flex-end;
           flex-wrap: wrap;
+          padding-top: 12px;
+          border-top: 1px solid #eef2f7;
         }
-        .small{ font-size: 12px; color: #374151; }
-        .link{
+
+        .contactTitle{
+          font-size: 11px;
+          font-weight: 900;
+          color: #111827;
+          margin-bottom: 4px;
+        }
+        .contactLine{
+          font-size: 12px;
+          color: #374151;
+          line-height: 1.4;
+        }
+
+        .cta{
           font-size: 12px;
           font-weight: 900;
           color: #2563eb;
           text-decoration: none;
+          white-space: nowrap;
         }
+
         .muted{ color: #6b7280; }
 
         .empty{
@@ -316,6 +464,7 @@ const Classifieds = () => {
         @media (max-width: 560px){
           .controls input, .controls select{ min-width: 100%; }
           .hero h1{ font-size: 34px; }
+          .mediaBox{ height: 175px; }
         }
       `}</style>
     </>

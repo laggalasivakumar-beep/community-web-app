@@ -91,25 +91,29 @@ const MyClassifieds = () => {
   }, []);
 
   const fetchMyAds = async () => {
-    setLoading(true);
-    try {
-      const lsUser = JSON.parse(localStorage.getItem("loggedUser") || "null");
-      const userId = sessionUser?.id || lsUser?.id || null;
+  setLoading(true);
+  try {
+    const { data: sess } = await supabase.auth.getSession();
+    const userId = sess?.session?.user?.id;
 
-      let q = supabase.from("classifieds").select("*").order("created_at", { ascending: false });
-      if (userId) q = q.eq("user_id", userId);
+    if (!userId) throw new Error("Please login first");
 
-      const { data, error } = await q;
-      if (error) throw error;
+    const { data, error } = await supabase
+      .from("classifieds")
+      .select("*")
+      .eq("user_id", userId)
+      .order("created_at", { ascending: false });
 
-      setMyAds(data || []);
-    } catch (e) {
-      console.error(e);
-      alert(e.message || "Failed to load ads");
-    } finally {
-      setLoading(false);
-    }
-  };
+    if (error) throw error;
+    setMyAds(data || []);
+  } catch (e) {
+    console.error(e);
+    alert(e.message || "Failed to load ads");
+  } finally {
+    setLoading(false);
+  }
+};
+
 
   useEffect(() => {
     if (activeTab === "myads") fetchMyAds();
@@ -154,7 +158,7 @@ const MyClassifieds = () => {
     setForm((p) => ({ ...p, image_file: file }));
   };
 
-  const validate = () => {
+    const validate = () => {
     if (!form.category) return "Please select Category";
     if (!form.sub_category) return "Please select Sub-Category";
     if (!form.title.trim()) return "Title is required";
@@ -173,81 +177,121 @@ const MyClassifieds = () => {
     return null;
   };
 
-  const submitAd = async () => {
-    const err = validate();
-    if (err) return alert(err);
+  // ✅ put this helper ABOVE submitAd (inside component)
+const uploadMediaToStorage = async (file, userId) => {
+  const ext = file.name.split(".").pop();
+  const fileName = `${Date.now()}-${Math.random().toString(16).slice(2)}.${ext}`;
+  const filePath = `${userId}/${fileName}`;
 
-    setLoading(true);
-    try {
-      const lsUser = JSON.parse(localStorage.getItem("loggedUser") || "null");
-      const userId = sessionUser?.id || lsUser?.id || null;
+  const { error: upErr } = await supabase
+    .storage
+    .from("classifieds")
+    .upload(filePath, file, { upsert: false });
 
-      const expiresAt = new Date();
-      expiresAt.setDate(expiresAt.getDate() + Number(form.expires_in_days || 30));
+  if (upErr) throw upErr;
 
-      // ✅ NOTE: Real image upload to Supabase Storage we will do in next step.
-      // For now, we store only youtube_url OR image file name placeholder.
-      const payload = {
-        user_id: userId,
+  const { data } = supabase
+    .storage
+    .from("classifieds")
+    .getPublicUrl(filePath);
 
-        category: form.category,
-        sub_category: form.sub_category,
-        title: form.title,
-        description: form.description,
+  return { publicUrl: data.publicUrl, filePath };
+};
 
-        price: form.price ? Number(form.price) : null,
+const submitAd = async () => {
+  const err = validate();
+  if (err) return alert(err);
 
-        city: form.city,
-        zip_code: form.zip_code,
-        region: form.region,
-        state: "Texas",
+  setLoading(true);
+  try {
+    // ✅ MUST: use Supabase session only
+    const { data: sess } = await supabase.auth.getSession();
+    const userId = sess?.session?.user?.id;
+    if (!userId) throw new Error("Please login first (Supabase session missing)");
 
-        contact_name: form.contact_name,
-        contact_phone: form.contact_phone,
-        contact_email: form.contact_email || null,
-        contact_whatsapp: form.contact_whatsapp || null,
+    const expiresAt = new Date();
+    expiresAt.setDate(expiresAt.getDate() + Number(form.expires_in_days || 30));
 
-        media_type: form.media_type,
-        youtube_url: form.media_type === "video" ? form.youtube_url : null,
-        image_name: form.media_type === "image" ? form.image_file?.name : null,
+    let mediaUrl = null;
+    let mediaPath = null;
 
-        status: "pending",
-        expires_at: expiresAt.toISOString(),
-      };
-
-      const { error } = await supabase.from("classifieds").insert([payload]);
-      if (error) throw error;
-
-      alert("✅ Ad submitted! Waiting for admin approval.");
-
-      setForm({
-        category: "",
-        sub_category: "",
-        title: "",
-        description: "",
-        price: "",
-        city: "",
-        zip_code: "",
-        region: "",
-        state: "Texas",
-        expires_in_days: 30,
-        contact_name: "",
-        contact_phone: "",
-        contact_email: "",
-        contact_whatsapp: "",
-        media_type: "image",
-        image_file: null,
-        youtube_url: "",
-      });
-
-      setActiveTab("myads");
-    } catch (e) {
-      console.error(e);
-      alert(e.message || "Error submitting ad");
-    } finally {
-      setLoading(false);
+    // ✅ upload only for image
+    if (form.media_type === "image" && form.image_file) {
+      const uploaded = await uploadMediaToStorage(form.image_file, userId);
+      mediaUrl = uploaded.publicUrl;
+      mediaPath = uploaded.filePath;
     }
-  };
+
+    const payload = {
+      user_id: userId,
+
+      category: form.category,
+      sub_category: form.sub_category,
+      title: form.title,
+      description: form.description,
+
+      price: form.price ? Number(form.price) : null,
+
+      city: form.city,
+      zip_code: form.zip_code,
+      region: form.region,
+      state: "Texas",
+
+      contact_name: form.contact_name,
+      contact_phone: form.contact_phone,
+      contact_email: form.contact_email || null,
+      contact_whatsapp: form.contact_whatsapp || null,
+
+      media_type: form.media_type,
+      youtube_url: form.media_type === "video" ? form.youtube_url : null,
+
+      // ✅ keep original name if you want
+      image_name: form.media_type === "image" ? form.image_file?.name : null,
+
+      // ✅ If you added columns in DB (Option A)
+      media_url: mediaUrl,
+      media_path: mediaPath,
+
+      status: "pending",
+      expires_at: expiresAt.toISOString(),
+    };
+
+    const { error } = await supabase.from("classifieds").insert([payload]);
+    if (error) throw error;
+
+    alert("✅ Ad submitted! Waiting for admin approval.");
+
+    // reset
+    setForm({
+      category: "",
+      sub_category: "",
+      title: "",
+      description: "",
+      price: "",
+      city: "",
+      zip_code: "",
+      region: "",
+      state: "Texas",
+      expires_in_days: 30,
+      contact_name: "",
+      contact_phone: "",
+      contact_email: "",
+      contact_whatsapp: "",
+      media_type: "image",
+      image_file: null,
+      youtube_url: "",
+    });
+
+    setActiveTab("myads");
+  } catch (e) {
+    console.error(e);
+    alert(e.message || "Error submitting ad");
+  } finally {
+    setLoading(false);
+  }
+};
+
+
 
   const deleteAd = async (id) => {
     if (!window.confirm("Delete this ad?")) return;

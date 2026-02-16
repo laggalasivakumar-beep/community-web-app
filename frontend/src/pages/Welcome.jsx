@@ -1,292 +1,316 @@
 import React from "react";
+import { useNavigate } from "react-router-dom";
+import { FaEye, FaBullseye } from "react-icons/fa";
 
 const WelcomeOnboarding = () => {
+  const navigate = useNavigate();
+
   return (
     <>
       {/* HERO SECTION */}
       <section className="hero">
-        <div className="hero-inner">
+        <div className="hero-container">
           <div className="hero-content">
             <h1>Welcome to Community Hub</h1>
             <p>
-              A trusted platform to connect people, businesses, jobs, and
-              opportunities all in one place.
+              A secure and trusted digital platform connecting verified members with real opportunities.
             </p>
-            <button className="primary-btn">Go to Dashboard</button>
+            <button
+              className="primary-btn"
+              onClick={() => navigate("/login")}
+            >
+              Login / Register
+            </button>
           </div>
         </div>
       </section>
 
-      {/* STEPS SECTION */}
-      <section className="steps-section">
-        <h2>Your Next Steps</h2>
-        <h4 className="section-desc">
-          Complete these simple steps to unlock everything Community Hub offers.
-        </h4>
-
-        <div className="steps-grid">
-          <div className="step-card">
-            <h3>Email Verification</h3>
-            <p>Verify your email to secure your account.</p>
+      {/* ABOUT SECTION */}
+      <section className="about-section">
+        <div className="about-wrapper">
+          <div className="about-image">
+            <img
+              src="/communityhubabout.png"
+              alt="Community"
+            />
           </div>
 
-          <div className="step-card">
-            <h3>Complete Profile</h3>
-            <p>Add your details so others can connect with you.</p>
-          </div>
-
-          <div className="step-card">
-            <h3>Admin Review</h3>
-            <p>We review new accounts for quality and trust.</p>
-          </div>
-
-          <div className="step-card">
-            <h3>Start Exploring</h3>
-            <p>Access jobs, classifieds, and community posts.</p>
+          <div className="about-content">
+            <h2>About Our Platform</h2>
+            <p>
+              Our platform is designed to empower verified users through a structured
+              self-registration process followed by administrative approval. This
+              ensures that only genuine and trusted members become part of the
+              ecosystem, creating a safe, reliable, and professional environment.
+            </p>
+            <p>
+              After approval, members gain access to a high-speed and intuitive
+              homepage that acts as a centralized hub for businesses, jobs,
+              classifieds, and community updates. Built with performance,
+              security, and simplicity in mind, the platform helps users save time,
+              build meaningful relationships, and confidently explore opportunities
+              within a trusted digital network.
+            </p>
           </div>
         </div>
       </section>
 
-      {/* FEATURES SECTION */}
+      {/* VISION & MISSION */}
+      <section className="vm-section">
+        <div className="vm-container">
+
+          <div className="vm-box">
+            <FaEye className="vm-icon" />
+            <h3>Our Vision</h3>
+            <p>
+              To build a future-ready digital ecosystem where verified communities
+              collaborate securely, exchange opportunities transparently, and grow
+              together through trusted digital connections.
+            </p>
+          </div>
+
+          <div className="vm-box">
+            <FaBullseye className="vm-icon" />
+            <h3>Our Mission</h3>
+            <p>
+              To provide a fast, secure, and user-focused platform that bridges
+              people, businesses, and services under one streamlined environment —
+              ensuring accessibility, trust, and long-term growth for every member.
+            </p>
+          </div>
+
+        </div>
+      </section>
+
+      {/* FEATURES */}
       <section className="features-section">
-        <h2>What You Can Do After Approval</h2>
+        <h2>Explore Opportunities After Approval</h2>
 
         <div className="features-grid">
+
           <div className="feature-card">
-            <img src="https://illustrations.popsy.co/blue/online-shopping.svg" alt="" />
-            <h4>Community</h4>
-            <p>Join discussions and local conversations.</p>
+            <img src="Community hub.png" alt="Community" />
+            <div className="feature-content">
+              <h4>Community</h4>
+              <p>Engage with verified members and participate in discussions.</p>
+              <button onClick={() => navigate("/community")}>Explore</button>
+            </div>
           </div>
 
           <div className="feature-card">
-            <img src="https://illustrations.popsy.co/blue/online-shopping.svg" alt="" />
-            <h4>Jobs</h4>
-            <p>Post or apply for local job opportunities.</p>
+            <img src="jobs.png" alt="Jobs" />
+            <div className="feature-content">
+              <h4>Jobs</h4>
+              <p>Find or post trusted job opportunities.</p>
+              <button onClick={() => navigate("/jobs")}>View Jobs</button>
+            </div>
           </div>
 
           <div className="feature-card">
-            <img
-              src="https://illustrations.popsy.co/blue/online-shopping.svg"
-              alt=""
-            />
-            <h4>Classifieds</h4>
-            <p>Buy, sell, or promote your listings.</p>
+            <img src="classifieds.png" alt="Classifieds" />
+            <div className="feature-content">
+              <h4>Classifieds</h4>
+              <p>Buy, sell, and promote products safely and efficiently.</p>
+              <button onClick={() => navigate("/classifieds")}>Browse</button>
+            </div>
           </div>
 
           <div className="feature-card">
-            <img src="https://illustrations.popsy.co/blue/online-shopping.svg" alt="" />
-            <h4>Directory</h4>
-            <p>Discover trusted businesses and services.</p>
+            <img src="directory.png" alt="Directory" />
+            <div className="feature-content">
+              <h4>Directory</h4>
+              <p>Discover verified businesses and essential services instantly.</p>
+              <button onClick={() => navigate("/directory")}>Open</button>
+            </div>
           </div>
+
         </div>
       </section>
 
-      {/* HELP SECTION */}
-      <section className="help-section">
-        <div className="help-inner">
-          <div className="help-image">
-            <img
-              src="https://images.unsplash.com/photo-1521737604893-d14cc237f11d"
-              alt="Help"
-            />
-          </div>
-
-          <div className="help-form">
-            <h2>Need Help?</h2>
-            <p>Have questions? Send us a message.</p>
-
-            <form>
-              <input type="text" placeholder="Your Name" />
-              <input type="email" placeholder="Email Address" />
-              <textarea placeholder="Your Message"></textarea>
-              <button type="submit">Send Message</button>
-            </form>
-          </div>
-        </div>
-      </section>
-
-      {/* STYLES */}
       <style>{`
-        body {
-          background: #f9fafb;
+
+      *{box-sizing:border-box;}
+      body{margin:0;font-family:Segoe UI, sans-serif;}
+
+      /* HERO */
+      .hero{
+        background:linear-gradient(135deg, #0f766e, #16a34a);
+        padding:120px 20px;
+        color:white;
+      }
+
+      .hero-container{
+        max-width:1200px;
+        margin:auto;
+      }
+
+      .hero-content{
+        max-width:750px;
+      }
+
+      .hero h1{
+        font-size:clamp(2rem,4vw,3rem);
+        white-space:nowrap;
+      }
+
+      .hero p{
+        margin-top:15px;
+        line-height:1.6;
+      }
+
+      .primary-btn{
+        margin-top:25px;
+        padding:14px 30px;
+        border:none;
+        border-radius:10px;
+        background:white;
+        color:#0f766e;
+        font-weight:600;
+        cursor:pointer;
+        transition:.3s;
+      }
+
+      .primary-btn:hover{
+        transform:translateY(-4px);
+        box-shadow:0 10px 25px rgba(0,0,0,0.2);
+      }
+
+      /* ABOUT */
+      .about-section{
+        padding:100px 20px;
+      }
+
+      .about-wrapper{
+        max-width:1200px;
+        margin:auto;
+        display:grid;
+        grid-template-columns:1fr 1fr;
+        gap:60px;
+        align-items:stretch;
+      }
+
+      .about-image img{
+        width:100%;
+        height:100%;
+        object-fit:cover;
+        border-radius:20px;
+      }
+
+      .about-content{
+        display:flex;
+        flex-direction:column;
+        justify-content:center;
+      }
+
+      .about-content p{
+        text-align:justify;
+        line-height:1.8;
+        margin-bottom:15px;
+      }
+
+      /* VISION & MISSION */
+      .vm-section{
+        background:#0f172a;
+        color:white;
+        padding:100px 20px;
+      }
+
+      .vm-container{
+        max-width:1100px;
+        margin:auto;
+        display:grid;
+        grid-template-columns:1fr 1fr;
+        gap:40px;
+      }
+
+      .vm-box{
+        padding:40px;
+        border-radius:20px;
+        background:linear-gradient(135deg, #0f766e, #16a34a);
+        transition:.4s;
+      }
+
+      .vm-box:hover{
+        transform:translateY(-12px);
+      }
+
+      .vm-icon{
+        font-size:40px;
+        margin-bottom:20px;
+      }
+
+      .vm-box p{
+        line-height:1.7;
+      }
+
+      /* FEATURES */
+      .features-section{
+        padding:100px 20px;
+        text-align:center;
+      }
+
+      .features-grid{
+        max-width:1300px;
+        margin:60px auto 0;
+        display:grid;
+        grid-template-columns:repeat(4,1fr);
+        gap:30px;
+      }
+
+      .feature-card{
+        background:white;
+        border-radius:20px;
+        overflow:hidden;
+        box-shadow:0 15px 40px rgba(0,0,0,0.08);
+        transition:.4s;
+      }
+
+      .feature-card:hover{
+        transform:translateY(-15px);
+      }
+
+      .feature-card img{
+        width:100%;
+        height:220px;
+        object-fit:cover;
+      }
+
+      .feature-content{
+        padding:25px;
+      }
+
+      .feature-content button{
+        margin-top:15px;
+        padding:10px 20px;
+        border:none;
+        border-radius:10px;
+        background:#FF6B70;
+        color:white;
+        cursor:pointer;
+      }
+
+      /* RESPONSIVE */
+      @media(max-width:1100px){
+        .features-grid{
+          grid-template-columns:repeat(2,1fr);
+        }
+      }
+
+      @media(max-width:768px){
+        .about-wrapper,
+        .vm-container{
+          grid-template-columns:1fr;
         }
 
-        /* HERO */
-        .hero {
-          background: linear-gradient(135deg, #0f766e, #16a34a);
-          padding: 80px 20px;
-          color: white;
+        .hero h1{
+          white-space:normal;
         }
 
-        .hero-inner {
-          max-width: 1200px;
-          margin: auto;
-          display: grid;
-          grid-template-columns: 1fr 1fr;
-          align-items: center;
-          gap: 40px;
+        .features-grid{
+          grid-template-columns:1fr;
         }
+      }
 
-        .hero-content h1 {
-          font-size: 3rem;
-          margin-bottom: 15px;
-        }
-
-        .hero-content p {
-          font-size: 1.1rem;
-          margin-bottom: 25px;
-          opacity: 0.95;
-        }
-
-        .primary-btn {
-          padding: 12px 26px;
-          border: none;
-          background: #fff;
-          color: #1e40af;
-          font-size: 1rem;
-          border-radius: 8px;
-          cursor: pointer;
-          transition: transform 0.3s;
-        }
-
-        .primary-btn:hover {
-          transform: translateY(-3px);
-        }
-
-        .hero-image img {
-          width: 100%;
-          animation: float 4s ease-in-out infinite;
-        }
-
-        @keyframes float {
-          0% { transform: translateY(0); }
-          50% { transform: translateY(-10px); }
-          100% { transform: translateY(0); }
-        }
-
-        /* STEPS */
-        .steps-section {
-          padding: 70px 20px;
-          text-align: center;
-        }
-          .steps-section h3{
-          color:white;
-        }
-          .steps-section p{
-          color:white;
-        }
-
-        .steps-section h2 {
-          font-size: 2.2rem;
-          color:black;
-        }
-
-        .section-desc {
-          margin: 15px auto 40px;
-          max-width: 700px;
-        }
-
-        .steps-grid {
-          max-width: 1100px;
-          margin: auto;
-          display: grid;
-          grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
-          gap: 25px;
-        }
-
-        .step-card {
-          background: linear-gradient(135deg, #0f766e, #16a34a);
-          padding: 30px;
-          border-radius: 14px;
-          box-shadow: 0 10px 30px rgba(0,0,0,0.08);
-          transition: transform 0.3s, box-shadow 0.3s;
-        }
-
-        .step-card:hover {
-          transform: translateY(-8px);
-          box-shadow: 0 15px 40px rgba(0,0,0,0.12);
-        }
-
-        /* FEATURES */
-        .features-section {
-          background: #f1f5f9;
-          padding: 70px 20px;
-          text-align: center;
-        }
-
-        .features-grid {
-          max-width: 1100px;
-          margin: 40px auto 0;
-          display: grid;
-          grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-          gap: 30px;
-        }
-
-        .feature-card {
-          background: white;
-          padding: 25px;
-          border-radius: 16px;
-          transition: transform 0.3s;
-        }
-
-        .feature-card:hover {
-          transform: translateY(-6px);
-        }
-
-        .feature-card img {
-          width: 120px;
-          margin-bottom: 15px;
-        }
-
-        /* HELP */
-        .help-section {
-          padding: 80px 20px;
-        }
-
-        .help-inner {
-          max-width: 1200px;
-          margin: auto;
-          display: grid;
-          grid-template-columns: 1fr 1fr;
-          gap: 50px;
-          align-items: top;
-        }
-
-        .help-form form {
-          display: flex;
-          flex-direction: column;
-          gap: 15px;
-        }
-
-        .help-form input,
-        .help-form textarea {
-          padding: 12px;
-          border-radius: 8px;
-          border: 1px solid #ddd;
-        }
-
-        .help-form button {
-          background: #2563eb;
-          color: white;
-          padding: 12px;
-          border: none;
-          border-radius: 8px;
-          cursor: pointer;
-        }
-          .help-image img {
-          width: 100%;
-          max-width: 600px;
-          height: auto;
-          object-fit: contain;
-        }
-
-        @media (max-width: 768px) {
-          .hero-inner,
-          .help-inner {
-            grid-template-columns: 1fr;
-            text-align: center;
-          }
-        }
       `}</style>
     </>
   );

@@ -25,7 +25,8 @@ const Directory = () => {
 
   return (
     <div className="directory-page">
-      {/* HERO SECTION */}
+      
+      {/* HERO */}
       <div className="hero">
         <h1>Find Trusted Businesses Near You</h1>
         <p>Explore verified services approved by our admin team</p>
@@ -40,51 +41,53 @@ const Directory = () => {
         </div>
       </div>
 
-<div className="grid">
-  {filtered.map((b) => (
-    <div key={b.id} className="card">
+      {/* GRID */}
+      <div className="grid">
+        {filtered.map((b) => (
+          <div key={b.id} className="card">
 
-      <h3 className="title">{b.business_name}</h3>
-      <span className="badge">{b.category}</span>
+            {/* IMAGE FIRST */}
+            {b.business_image_url && (
+              <div className="imgWrap">
+                <img
+                  src={b.business_image_url}
+                  alt={b.business_name}
+                  className="img"
+                />
+              </div>
+            )}
 
-      <div className="info-row">
-        <span className="label">Description:</span>
-        <span className="text">{b.description}</span>
+            {/* NAME + CATEGORY */}
+            <div className="cardTop">
+              <h3 className="title">{b.business_name}</h3>
+              <span className="badge">{b.category}</span>
+            </div>
+
+            {/* DETAILS */}
+            <div className="info">
+              <p><strong>City:</strong> {b.city}</p>
+              <p><strong>State:</strong> {b.state}</p>
+              <p><strong>Mobile:</strong> {b.mobile}</p>
+            </div>
+
+            {/* VISIT WEBSITE */}
+            {b.website && (
+              <a
+                href={
+                  b.website.startsWith("http")
+                    ? b.website
+                    : `https://${b.website}`
+                }
+                target="_blank"
+                rel="noopener noreferrer"
+                className="visit-btn"
+              >
+                Visit Website
+              </a>
+            )}
+          </div>
+        ))}
       </div>
-
-      <div className="info-row">
-        <span className="label">City:</span>
-        <span className="text">{b.city}</span>
-      </div>
-
-      <div className="info-row">
-        <span className="label">State:</span>
-        <span className="text">{b.state}</span>
-      </div>
-
-      <div className="info-row">
-        <span className="label">Mobile:</span>
-        <span className="text">{b.mobile}</span>
-      </div>
-
-      {/* BUTTON */}
-      {b.website && (
-        <a
-          href={b.website.startsWith("http") ? b.website : `https://${b.website}`}
-          target="_blank"
-          rel="noopener noreferrer"
-          className="visit-btn"
-        >
-          Visit Website
-        </a>
-      )}
-
-    </div>
-  ))}
-</div>
-
-
-
 
       {/* CSS */}
       <style>{`
@@ -94,11 +97,10 @@ const Directory = () => {
           min-height: 100vh;
         }
 
-        /* HERO */
         .hero {
           background: linear-gradient(135deg, #0f9d58, #0c7c46);
           color: white;
-          padding: 60px 8%;
+          padding:70px 30px 70px 80px ;
         }
 
         .hero h1 {
@@ -122,128 +124,91 @@ const Directory = () => {
 
         /* GRID */
         .grid {
-  padding: 25px 8%;
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
-  gap: 16px; /* tighter grid */
-}
+          padding: 25px 8%;
+          display: grid;
+          grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+          gap: 20px;
+        }
 
-.card {
-  background: white;
-  border-radius: 12px;
-  padding: 16px;
-  box-shadow: 0 4px 15px rgba(0,0,0,0.08);
-  border-left: 4px solid #ff6b6b;
-  display: flex;
-  flex-direction: column;
-}
+        /* CARD */
+        .card {
+          background: white;
+          border-radius: 14px;
+          padding: 15px;
+          box-shadow: 0 4px 15px rgba(0,0,0,0.08);
+          border: 1px solid #eef2f7;
+          display: flex;
+          flex-direction: column;
+          transition: 0.3s;
+        }
 
         .card:hover {
-          transform: translateY(-6px);
+          transform: translateY(-5px);
           box-shadow: 0 12px 30px rgba(0,0,0,0.15);
         }
 
-        .card-header {
+        /* IMAGE */
+        .imgWrap {
+          width: 100%;
+          height: 180px;
+          border-radius: 12px;
+          overflow: hidden;
+          margin-bottom: 12px;
+          background: #f9fafb;
+        }
+
+        .img {
+          width: 100%;
+          height: 100%;
+          object-fit: cover;
+        }
+
+        /* TOP SECTION */
+        .cardTop {
           display: flex;
           justify-content: space-between;
           align-items: center;
           margin-bottom: 10px;
         }
 
-        .card-header h3 {
-          font-size: 18px;
-          color: #111;
-        }
-
         .title {
-  font-size: 16px;
-  font-weight: 600;
-  margin-bottom: 5px;
-}
-
-.badge {
-  font-size: 11px;
-  background: #e0f2fe;
-  color: #0284c7;
-  padding: 4px 10px;
-  border-radius: 20px;
-  width: fit-content;
-  margin-bottom: 10px;
-}
-
-        .desc {
-          font-size: 14px;
-          color: #555;
-          margin: 12px 0;
-          min-height: 50px;
+          font-size: 16px;
+          font-weight: 700;
+          margin: 0;
         }
 
-        .details {
-          font-size: 13px;
-          color: #333;
-          margin-bottom: 15px;
+        .badge {
+          font-size: 11px;
+          background: #e0f2fe;
+          color: #0284c7;
+          padding: 4px 10px;
+          border-radius: 20px;
         }
-.info-row {
-  display: flex;
-  gap: 6px;
-  font-size: 13px;
-  margin: 3px 0;
-}
-  .label {
-  font-weight: 600;
-  color: #333;
-  min-width: 85px;
-}
-
-.text {
-  color: #555;
-  flex: 1;
-}
-        .visit-btn {
-  margin-top: 10px;
-  background: linear-gradient(135deg, #ff6b6b, #ff4b4b);
-  color: white;
-  text-align: center;
-  padding: 9px;
-  border-radius: 6px;
-  text-decoration: none;
-  font-size: 13px;
-  font-weight: 600;
-  transition: 0.3s;
-}
-
-.visit-btn:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 6px 14px rgba(0,0,0,0.15);
-}
-
 
         .info p {
-  margin: 2px 0; /* removes extra space */
-  font-size: 13px;
-}
+          font-size: 13px;
+          margin: 4px 0;
+          color: #333;
+        }
 
-.value {
-  color: #444;
-  margin-bottom: 6px;
-}
+        .visit-btn {
+          margin-top: auto;
+          background: linear-gradient(135deg, #ff6b6b, #ff4b4b);
+          color: white;
+          text-align: center;
+          padding: 10px;
+          border-radius: 8px;
+          text-decoration: none;
+          font-size: 13px;
+          font-weight: 600;
+          transition: 0.3s;
+        }
 
-.link {
-  font-size: 13px;
-  color: #0f9d58;
-  word-break: break-all;
-}
+        .visit-btn:hover {
+          transform: translateY(-2px);
+          box-shadow: 0 6px 14px rgba(0,0,0,0.15);
+        }
 
-.btn {
-  margin-top: 10px;
-  background: #ff6b6b;
-  color: white;
-  padding: 9px;
-  text-align: center;
-  border-radius: 6px;
-  text-decoration: none;
-  font-size: 14px;
-}
       `}</style>
     </div>
   );

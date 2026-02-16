@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { supabase } from "../supabaseClient"; // adjust path if needed
+import { supabase } from "../supabaseClient"; // keep as your working path
 
 const categories = {
   "Food & Beverage": [
@@ -52,6 +52,10 @@ const MyDirectory = () => {
     experience: ""
   });
 
+  // ✅ NEW: image + uploading state (must be inside component)
+  const [businessImage, setBusinessImage] = useState(null);
+  const [uploading, setUploading] = useState(false);
+
   const handleChange = (e) =>
     setForm({ ...form, [e.target.name]: e.target.value });
 
@@ -64,23 +68,75 @@ const MyDirectory = () => {
     }));
   };
 
-const submitForm = async () => {
-  const { data: userData } = await supabase.auth.getUser();
+  // ✅ UPDATED submitForm: upload image to Storage + store URL in directory_listings
+  const submitForm = async () => {
+    try {
+      setUploading(true);
 
-  const { error } = await supabase.from("directory_listings").insert({
-    user_id: userData?.user?.id || null,
-    ...form,
-    status: "pending"
-  });
+      const { data: userData } = await supabase.auth.getUser();
 
-  if (error) {
-    alert("Error: " + error.message);
-  } else {
-    alert("Business submitted for admin approval!");
-  }
-};
+if (!userData?.user) {
+  alert("Please login to submit business listing & upload image.");
+  setUploading(false);
+  return;
+}
+
+const userId = userData.user.id;
 
 
+      // Image required
+      if (!businessImage) {
+        alert("Please upload a business image (JPG/PNG/WEBP). Recommended: 1570×1048.");
+        setUploading(false);
+        return;
+      }
+
+      // Upload to storage bucket
+      const fileExt = businessImage.name.split(".").pop();
+      const fileName = `business_${Date.now()}.${fileExt}`;
+      const filePath = `${userId || "guest"}/${fileName}`;
+
+      const { error: uploadError } = await supabase.storage
+        .from("directory-images")
+        .upload(filePath, businessImage, {
+          cacheControl: "3600",
+          upsert: false,
+          contentType: businessImage.type
+        });
+
+      if (uploadError) {
+        alert("Upload Error: " + uploadError.message);
+        setUploading(false);
+        return;
+      }
+
+      // Get public URL (bucket must be public)
+      const { data: publicData } = supabase.storage
+        .from("directory-images")
+        .getPublicUrl(filePath);
+
+      const business_image_url = publicData?.publicUrl || null;
+
+      // Insert to table with image url
+      const { error } = await supabase.from("directory_listings").insert({
+        user_id: userId,
+        ...form,
+        business_image_url,
+        status: "pending"
+      });
+
+      if (error) {
+        alert("Error: " + error.message);
+      } else {
+        alert("Business submitted for admin approval!");
+        setBusinessImage(null);
+      }
+    } catch (err) {
+      alert("Error: " + (err?.message || "Something went wrong"));
+    } finally {
+      setUploading(false);
+    }
+  };
 
   return (
     <div className="directory-container">
@@ -92,16 +148,48 @@ const submitForm = async () => {
         <h3>Basic Business Information</h3>
         <input name="business_name" placeholder="Business Name" onChange={handleChange} />
 
+        {/* ✅ NEW: Business Image Upload */}
+        <div className="image-upload">
+          <label className="img-label">Business Image (Recommended: 1570 × 1048)</label>
+          <input
+            type="file"
+            accept="image/png,image/jpeg,image/jpg,image/webp"
+            onChange={(e) => {
+              const file = e.target.files?.[0];
+              if (!file) return;
+
+              const allowed = ["image/png", "image/jpeg", "image/webp"];
+              if (!allowed.includes(file.type)) {
+                alert("Only JPG / PNG / WEBP allowed");
+                e.target.value = "";
+                return;
+              }
+
+              // Optional file size limit (3MB)
+              if (file.size > 3 * 1024 * 1024) {
+                alert("Image should be under 3MB");
+                e.target.value = "";
+                return;
+              }
+
+              setBusinessImage(file);
+            }}
+          />
+          <small className="img-hint">
+            Allowed: JPG/PNG/WEBP • Recommended: 1570×1048 px • Max: 3MB
+          </small>
+        </div>
+
         <select name="category" onChange={handleChange}>
           <option value="">Select Category</option>
-          {Object.keys(categories).map(cat => (
+          {Object.keys(categories).map((cat) => (
             <option key={cat}>{cat}</option>
           ))}
         </select>
 
         <select name="sub_category" onChange={handleChange}>
           <option value="">Select Sub-Category</option>
-          {categories[form.category]?.map(sub => (
+          {categories[form.category]?.map((sub) => (
             <option key={sub}>{sub}</option>
           ))}
         </select>
@@ -135,7 +223,6 @@ const submitForm = async () => {
         <input name="zip" placeholder="ZIP Code" onChange={handleChange} />
       </div>
 
-
       {/* DESCRIPTION */}
       <div className="card">
         <h3>Business Description</h3>
@@ -164,7 +251,7 @@ const submitForm = async () => {
       <div className="card">
         <h3>Business Timings</h3>
         <div className="days">
-          {["Mon","Tue","Wed","Thu","Fri","Sat","Sun"].map(day => (
+          {["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"].map((day) => (
             <label key={day}>
               <input type="checkbox" onChange={() => toggleDay(day)} /> {day}
             </label>
@@ -181,8 +268,9 @@ const submitForm = async () => {
         <input name="instagram" placeholder="Instagram URL" onChange={handleChange} />
         <input name="linkedin" placeholder="LinkedIn URL" onChange={handleChange} />
       </div>
-      <button className="submit-btn" onClick={submitForm}>
-        Submit Business Listing
+
+      <button className="submit-btn" onClick={submitForm} disabled={uploading}>
+        {uploading ? "Uploading..." : "Submit Business Listing"}
       </button>
 
       {/* CSS */}
@@ -237,10 +325,6 @@ const submitForm = async () => {
           margin-bottom: 15px;
         }
 
-        .declaration {
-          font-size: 14px;
-        }
-
         .submit-btn {
           width: 100%;
           padding: 16px;
@@ -255,6 +339,33 @@ const submitForm = async () => {
 
         .submit-btn:hover {
           background: #1d4ed8;
+        }
+
+        .submit-btn:disabled{
+          opacity: 0.7;
+          cursor: not-allowed;
+        }
+
+        /* ✅ NEW styles for image upload */
+        .image-upload {
+          margin-top: 10px;
+          margin-bottom: 10px;
+          text-align: left;
+        }
+
+        .img-label {
+          display: block;
+          font-weight: 700;
+          margin-bottom: 8px;
+          color: #1f2937;
+        }
+
+        .img-hint {
+          display: block;
+          margin-top: -6px;
+          margin-bottom: 10px;
+          color: #6b7280;
+          font-size: 12px;
         }
       `}</style>
     </div>
