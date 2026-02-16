@@ -86,6 +86,12 @@ const LoginForm = () => {
     <img src="https://cdn-icons-png.flaticon.com/512/724/724664.png" />
   </button>
 
+  {/* WHATSAPP */}
+<button type="button" className="icon-btn">
+  <img src="https://cdn-icons-png.flaticon.com/512/733/733585.png" />
+</button>
+
+
   {/* APPLE */}
   <button type="button" className="icon-btn">
     <img src="https://cdn-icons-png.flaticon.com/512/0/747.png" />
@@ -120,15 +126,16 @@ const LoginForm = () => {
         }
 
         .login-form {
-          background: #ffffff;
-          padding: 20px 40px 40px 40px;
-          border-radius: 12px;
-          width: 100%;
-          max-width: 420px;
-          box-shadow: 0 10px 30px rgba(0,0,0,0.08);
-          display: flex;
-          flex-direction: column;
-        }
+  background: #ffffff;
+  padding: 20px 40px 40px 40px;
+  border-radius: 12px;
+  width: 100%;
+  max-width: 520px;   /* previously 420px */
+  box-shadow: 0 10px 30px rgba(0,0,0,0.08);
+  display: flex;
+  flex-direction: column;
+}
+
 
         .login-form h2 {
           text-align: center;
@@ -148,7 +155,7 @@ const LoginForm = () => {
           margin-top: 10px;
           padding: 12px;
           border-radius: 8px;
-          background: #2563eb;
+          background: linear-gradient(135deg, #0f766e, #16a34a);
           color: #fff;
           font-weight: 600;
           cursor: pointer;
@@ -158,22 +165,26 @@ const LoginForm = () => {
         .alt-login { margin-top: 25px; }
 
         .icon-row {
-          display: flex;
-          justify-content: space-between;
-          gap: 12px;
-        }
+  display: flex;
+  gap: 10px;
+}
 
-        .icon-btn {
-          flex: 1;
-          background: #f1f5f9 !important;
-          color: #111 !important;
-          font-size: 22px;
-          display: flex;
-          align-items: center;
-          justify-content: center;
-          height: 48px;
-          border-radius: 10px;
-        }
+.icon-btn {
+  flex: 1;
+  background: #f1f5f9 !important;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 48px;
+  border-radius: 10px;
+  transition: 0.3s ease;
+}
+
+.icon-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 18px rgba(0,0,0,0.1);
+}
+
 
         .icon-btn img {
           width: 22px;

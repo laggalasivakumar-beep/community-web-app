@@ -79,7 +79,7 @@ const RegisterForm = () => {
   return (
     <div style={styles.page}>
       <form style={styles.card} onSubmit={handleSubmit}>
-        <h2 style={{ color: "rgb(255, 107, 107)", textAlign: "center" }}>Company Registration</h2>
+        <h2 style={{marginBottom: "10px", color: "linear-gradient(135deg, #0f766e, #16a34a)", textAlign: "center" }}>User Registration</h2>
 
         {error && <p style={styles.error}>{error}</p>}
 
@@ -191,44 +191,69 @@ const RegisterForm = () => {
 const styles = {
   page: {
     minHeight: "100vh",
-    background: "#f4f4f4",
+    background: "transparent", // removed grey background
     display: "flex",
     justifyContent: "center",
     alignItems: "center",
+    padding: "20px 0px 0px 0px",
   },
+
   card: {
-    background: "#fff",
-    padding: "22px",
-    width: "420px",
-    borderRadius: "10px",
-    boxShadow: "0 0 10px rgba(0,0,0,0.1)",
+    background: "#ffffff",
+    padding: "10px 10px 10px 10px",
+    width: "150%",
+    
+    borderRadius: "18px",
+    boxShadow: "0 15px 40px rgba(0,0,0,0.06)", // soft shadow (not dark)
+    display: "flex",
+    flexDirection: "column",
   },
+
   input: {
-    width: "95%",
-    padding: "9px",
-    marginBottom: "9px",
+    width: "100%",  // full width fix
+    padding: "12px 14px",
+    marginBottom: "14px",
+    borderRadius: "8px",
+    border: "1px solid #d1d5db",
+    fontSize: "14px",
+    outline: "none",
+    transition: "0.3s ease",
   },
+
   textarea: {
-    width: "95%",
-    padding: "9px",
-    height: "55px", // ✅ simple small address
-    marginBottom: "9px",
+    width: "100%",
+    padding: "12px 14px",
+    height: "70px",
+    marginBottom: "14px",
+    borderRadius: "8px",
+    border: "1px solid #d1d5db",
+    fontSize: "14px",
+    resize: "none",
+    outline: "none",
+    transition: "0.3s ease",
   },
+
   button: {
     width: "100%",
-    padding: "12px",
-    background: "#ff6b6b",
+    padding: "14px",
+    marginTop: "10px",
+    background: "linear-gradient(135deg, #0f766e, #16a34a)",
     color: "#fff",
     border: "none",
+    borderRadius: "8px",
     cursor: "pointer",
-    fontWeight: "bold",
+    fontWeight: "600",
+    fontSize: "15px",
+    transition: "0.3s ease",
   },
+
   error: {
-    color: "red",
-    fontSize: "14px",
-    marginBottom: "10px",
+    color: "linear-gradient(135deg, #0f766e, #16a34a)",
+    fontSize: "13px",
+    marginBottom: "12px",
     textAlign: "center",
   },
 };
+
 
 export default RegisterForm;

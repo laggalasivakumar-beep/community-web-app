@@ -275,6 +275,94 @@ const Jobs = () => {
   font-size: 0.95rem;
 }
 
+/* ================= RESPONSIVE ================= */
+
+/* Large Tablets */
+@media (max-width: 1024px) {
+  .jobs-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .jobs-hero {
+    padding: 60px 40px;
+  }
+}
+
+/* Tablets */
+@media (max-width: 768px) {
+
+  .jobs-wrapper {
+    padding: 20px;
+  }
+
+  .jobs-hero {
+    padding: 50px 25px;
+    text-align: center;
+  }
+
+  .jobs-hero h1 {
+    font-size: 1.8rem;
+  }
+
+  .jobs-hero p {
+    font-size: 0.95rem;
+  }
+
+  .jobs-search {
+    max-width: 100%;
+  }
+
+  .jobs-grid {
+    grid-template-columns: 1fr;
+    gap: 20px;
+  }
+
+  /* Remove heavy zoom on touch devices */
+  .job-card:hover {
+    transform: none;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.08);
+  }
+}
+
+/* Small Phones */
+@media (max-width: 480px) {
+
+  .jobs-wrapper {
+    padding: 15px;
+  }
+
+  .jobs-hero {
+    padding: 40px 20px;
+  }
+
+  .jobs-hero h1 {
+    font-size: 1.5rem;
+  }
+
+  .jobs-hero p {
+    font-size: 0.85rem;
+  }
+
+  .job-card {
+    padding: 16px;
+    border-radius: 14px;
+  }
+
+  .job-title h4 {
+    font-size: 1rem;
+  }
+
+  .job-field p {
+    font-size: 0.85rem;
+  }
+
+  .apply-btn {
+    padding: 8px 12px;
+    font-size: 0.9rem;
+  }
+}
+
+
       `}</style>
     </div>
   );

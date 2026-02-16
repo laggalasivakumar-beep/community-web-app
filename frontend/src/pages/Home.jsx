@@ -980,6 +980,172 @@ const toEmbedUrl = (url = "") => {
 
 }
 
+/* ========================= */
+/* GLOBAL RESPONSIVE FIXES  */
+/* ========================= */
+
+@media (max-width: 1200px) {
+  .hero {
+    padding: 70px 40px;
+  }
+
+  .about {
+    padding: 50px 40px;
+  }
+}
+
+/* ========================= */
+/* TABLET VIEW (1024px ↓)   */
+/* ========================= */
+
+@media (max-width: 1024px) {
+
+  /* HERO */
+  .hero h1 {
+    font-size: 32px;
+  }
+
+  .hero p {
+    font-size: 16px;
+  }
+
+  /* ABOUT SECTION STACK */
+  .about {
+    flex-direction: column;
+    text-align: center;
+  }
+
+  .about img {
+    max-width: 100%;
+  }
+
+  .about-content {
+    text-align: center;
+  }
+
+  /* FEATURES */
+  .feature-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  /* JOBS */
+  .homejobs-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  /* DIRECTORY */
+  .homedir-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  /* CLASSIFIEDS */
+  .homecls-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+/* ========================= */
+/* MOBILE VIEW (768px ↓)    */
+/* ========================= */
+
+@media (max-width: 768px) {
+
+  /* HERO */
+  .hero {
+    padding: 60px 20px;
+    text-align: center;
+  }
+
+  .hero h3 {
+    margin: 0 auto 15px;
+  }
+
+  .hero h1 {
+    font-size: 26px;
+  }
+
+  .hero p {
+    font-size: 15px;
+  }
+
+  .hero-links {
+    text-align: center;
+  }
+
+  /* ABOUT */
+  .about {
+    padding: 40px 20px;
+  }
+
+  /* FEATURES */
+  .features {
+    padding: 40px 20px;
+  }
+
+  .feature-grid {
+    grid-template-columns: 1fr;
+  }
+
+  /* SECTION HEADERS */
+  .homejobs-head,
+  .homedir-head,
+  .homecls-head {
+    flex-direction: column;
+    align-items: flex-start;
+    padding: 20px;
+  }
+
+  /* GRIDS */
+  .homejobs-grid,
+  .homedir-grid,
+  .homecls-grid {
+    grid-template-columns: 1fr;
+    padding: 20px;
+  }
+
+  /* CONTACT */
+  .contact {
+    padding: 40px 20px;
+  }
+
+  .contact-card {
+    padding: 35px 20px;
+  }
+}
+
+/* ========================= */
+/* SMALL PHONES (480px ↓)   */
+/* ========================= */
+
+@media (max-width: 480px) {
+
+  .hero h1 {
+    font-size: 22px;
+  }
+
+  .hero h3 {
+    font-size: 16px;
+    width: auto;
+    padding: 8px 15px;
+  }
+
+  .section-title {
+    font-size: 20px;
+  }
+
+  .homejobs-head h2,
+  .homedir-head h2,
+  .homecls-head h2 {
+    font-size: 20px;
+  }
+
+  .contact-card h2 {
+    font-size: 1.6rem;
+  }
+}
+
+
+
 
       
         }

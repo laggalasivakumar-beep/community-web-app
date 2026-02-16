@@ -208,6 +208,161 @@ const Directory = () => {
           transform: translateY(-2px);
           box-shadow: 0 6px 14px rgba(0,0,0,0.15);
         }
+          /* ================================= */
+/* LARGE TABLETS (1024px ↓)          */
+/* ================================= */
+@media (max-width: 1024px){
+
+  .hero{
+    padding:60px 40px;
+  }
+
+  .hero h1{
+    font-size:34px;
+  }
+
+  .search-box input{
+    width:300px;
+  }
+
+  .grid{
+    padding:25px 5%;
+    gap:18px;
+  }
+
+}
+
+
+/* ================================= */
+/* TABLETS (900px ↓)                 */
+/* ================================= */
+@media (max-width: 900px){
+
+  .hero{
+    padding:60px 30px;
+    text-align:center;
+  }
+
+  .hero h1{
+    font-size:30px;
+  }
+
+  .search-box{
+    display:flex;
+    justify-content:center;
+  }
+
+  .search-box input{
+    width:100%;
+    max-width:350px;
+  }
+
+  .grid{
+    padding:25px 4%;
+    grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+  }
+
+}
+
+
+/* ================================= */
+/* MOBILE (768px ↓)                  */
+/* ================================= */
+@media (max-width: 768px){
+
+  .hero{
+    padding:50px 20px;
+    text-align:center;
+  }
+
+  .hero h1{
+    font-size:24px;
+    line-height:1.3;
+  }
+
+  .hero p{
+    font-size:14px;
+  }
+
+  .search-box{
+    display:flex;
+    justify-content:center;
+  }
+
+  .search-box input{
+    width:100%;
+    max-width:100%;
+    font-size:13px;
+  }
+
+  .grid{
+    padding:20px;
+    grid-template-columns:1fr 1fr;
+    gap:15px;
+  }
+
+  .imgWrap{
+    height:150px;
+  }
+
+}
+
+
+/* ================================= */
+/* SMALL PHONES (480px ↓)            */
+/* ================================= */
+@media (max-width: 480px){
+
+  .hero{
+    padding:45px 15px;
+  }
+
+  .hero h1{
+    font-size:20px;
+  }
+
+  .hero p{
+    font-size:13px;
+  }
+
+  .search-box input{
+    padding:12px 16px;
+    font-size:12px;
+  }
+
+  .grid{
+    grid-template-columns:1fr;
+    padding:15px;
+  }
+
+  .card{
+    padding:12px;
+  }
+
+  .imgWrap{
+    height:140px;
+  }
+
+  .title{
+    font-size:14px;
+  }
+
+  .badge{
+    font-size:10px;
+    padding:3px 8px;
+  }
+
+  .info p{
+    font-size:12px;
+  }
+
+  .visit-btn{
+    font-size:12px;
+    padding:9px;
+  }
+
+}
+
 
       `}</style>
     </div>

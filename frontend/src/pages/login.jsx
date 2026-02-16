@@ -13,10 +13,9 @@ const LoginPage = () => {
           {/* LEFT SIDE DESIGN PANEL */}
           <div className="auth-left">
             <div className="auth-left-content">
-              <h1>Welcome Back</h1>
+              <h1>Welcome to Community Hub</h1>
               <p>
-                Securely access your community portal.
-                Connect, collaborate, and explore opportunities.
+                A secure and trusted platform where verified members connect, explore opportunities, and grow together.
               </p>
             </div>
           </div>
@@ -42,135 +41,155 @@ const LoginPage = () => {
 
       <style>{`
 
-      *{
-        box-sizing:border-box;
-      }
+*{
+  box-sizing:border-box;
+}
 
-      body{
-        margin:0;
-        font-family: 'Segoe UI', sans-serif;
-      }
+body{
+  margin:0;
+  font-family: 'Poppins', sans-serif;
+}
 
-      /* FULL PAGE BACKGROUND */
-      .auth-wrapper{
-        min-height:100vh;
-        display:flex;
-        align-items:center;
-        justify-content:center;
-        background:linear-gradient(135deg,#1e3a8a,#2563eb,#0f766e);
-        padding:40px 20px;
-      }
+/* FULL PAGE BACKGROUND */
+.auth-wrapper{
+  min-height:100vh;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  margin: 20px 0px 20px 0px;
+}
 
-      /* MAIN CONTAINER */
-      .auth-container{
-        width:100%;
-        max-width:1100px;
-        display:grid;
-        grid-template-columns:1fr 1fr;
-        background:rgba(255,255,255,0.1);
-        backdrop-filter:blur(20px);
-        border-radius:25px;
-        overflow:hidden;
-        box-shadow:0 25px 60px rgba(0,0,0,0.3);
-        animation:fadeIn .8s ease;
-      }
+/* MAIN CONTAINER */
+.auth-container{
+  width:100%;
+  max-width:1050px;
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  border-radius:35px;
+  overflow:hidden;
+  box-shadow:0 40px 100px rgba(0,0,0,0.4);
+  animation:fadeIn .8s ease;
+}
 
-      /* LEFT SIDE */
-      .auth-left{
-        background:linear-gradient(135deg,#0f172a,#1e3a8a);
-        color:white;
-        display:flex;
-        align-items:center;
-        justify-content:center;
-        padding:60px;
-        position:relative;
-      }
+/* LEFT SIDE */
+.auth-left{
+  background:linear-gradient(135deg, #0f766e, #16a34a);
+  color:white;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  padding:80px 60px;
+  position:relative;
+}
 
-      .auth-left::before{
-        content:"";
-        position:absolute;
-        width:300px;
-        height:300px;
-        background:rgba(255,255,255,0.08);
-        border-radius:50%;
-        top:-100px;
-        right:-100px;
-      }
+.auth-left::after{
+  content:"";
+  position:absolute;
+  width:420px;
+  height:420px;
+  background:rgba(255,255,255,0.08);
+  border-radius:50%;
+  top:-120px;
+  right:-120px;
+}
 
-      .auth-left-content h1{
-        font-size:2.5rem;
-        margin-bottom:20px;
-      }
+.auth-left-content{
+  max-width:400px;
+  z-index:2;
+}
 
-      .auth-left-content p{
-        font-size:1rem;
-        line-height:1.7;
-        opacity:0.85;
-      }
+.auth-left-content h1{
+  font-size:2.8rem;
+  margin-bottom:20px;
+  font-weight:600;
+}
 
-      /* RIGHT SIDE */
-      .auth-right{
-        background:white;
-        display:flex;
-        align-items:center;
-        justify-content:center;
-        padding:60px 40px;
-      }
+.auth-left-content p{
+  font-size:1rem;
+  line-height:1.8;
+  opacity:0.9;
+}
 
-      .auth-card{
-        width:100%;
-        max-width:400px;
-        animation:slideUp .6s ease;
-      }
+/* RIGHT SIDE */
+.auth-right{
 
-      /* TOGGLE TEXT */
-      .auth-toggle-text{
-        margin-top:25px;
-        font-size:15px;
-        text-align:center;
-        color:#555;
-      }
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  padding:40px 30px 30px 30px;
+  position:relative;
+}
 
-      .auth-toggle-text span{
-        margin-left:6px;
-        color:#2563eb;
-        font-weight:600;
-        cursor:pointer;
-        transition:.3s;
-      }
+/* Top Curved Welcome Tag Effect */
+.auth-right::before{
+  content:"Welcome back";
+  position:absolute;
+  top:0;
+  left:0;
+  background:linear-gradient(135deg, #0f766e, #16a34a);
+  color:white;
+  padding:12px 30px;
+  border-bottom-right-radius:30px;
+  font-size:14px;
+  font-weight:500;
+}
 
-      .auth-toggle-text span:hover{
-        color:#1e40af;
-        text-decoration:underline;
-      }
+/* FORM CARD */
+.auth-card{
+  width:100%;
+  max-width:380px;
+  animation:slideUp .6s ease;
+}
 
-      /* ANIMATIONS */
-      @keyframes fadeIn{
-        from{opacity:0; transform:scale(.95);}
-        to{opacity:1; transform:scale(1);}
-      }
+/* TOGGLE TEXT */
+.auth-toggle-text{
+  font-size:14px;
+  text-align:center;
+  color:#555;
+}
 
-      @keyframes slideUp{
-        from{opacity:0; transform:translateY(20px);}
-        to{opacity:1; transform:translateY(0);}
-      }
+.auth-toggle-text span{
+  margin-left:6px;
+  color:#6d28d9;
+  font-weight:600;
+  cursor:pointer;
+  transition:.3s;
+}
 
-      /* RESPONSIVE */
-      @media(max-width:900px){
-        .auth-container{
-          grid-template-columns:1fr;
-        }
+.auth-toggle-text span:hover{
+  color:#4c1d95;
+  text-decoration:underline;
+}
 
-        .auth-left{
-          display:none;
-        }
+/* ANIMATIONS */
+@keyframes fadeIn{
+  from{opacity:0; transform:scale(.95);}
+  to{opacity:1; transform:scale(1);}
+}
 
-        .auth-right{
-          padding:40px 25px;
-        }
-      }
+@keyframes slideUp{
+  from{opacity:0; transform:translateY(20px);}
+  to{opacity:1; transform:translateY(0);}
+}
 
-      `}</style>
+/* RESPONSIVE */
+@media(max-width:900px){
+  .auth-container{
+    grid-template-columns:1fr;
+    border-radius:25px;
+  }
+
+  .auth-left{
+    display:none;
+  }
+
+  .auth-right{
+    padding:50px 30px;
+  }
+}
+
+`}</style>
+
     </>
   );
 };

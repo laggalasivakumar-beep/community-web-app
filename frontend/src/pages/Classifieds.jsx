@@ -466,6 +466,114 @@ const Classifieds = () => {
           .hero h1{ font-size: 34px; }
           .mediaBox{ height: 175px; }
         }
+
+        /* ================= RESPONSIVE ================= */
+
+/* Large Tablets */
+@media (max-width: 1024px){
+  .hero h1{
+    font-size: 38px;
+  }
+
+  .grid{
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  }
+}
+
+/* Tablets */
+@media (max-width: 768px){
+
+  .hero{
+    padding: 60px 20px;
+  }
+
+  .heroInner{
+    text-align: center;
+  }
+
+  .heroBtns{
+    justify-content: center;
+  }
+
+  .wrap{
+    padding: 18px;
+  }
+
+  .topRow{
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .controls{
+    width: 100%;
+  }
+
+  .controls input,
+  .controls select,
+  .btnSmall{
+    width: 100%;
+  }
+
+  .grid{
+    grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+  }
+
+  .bottom{
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .cta{
+    width: 100%;
+    text-align: center;
+  }
+}
+
+/* Small Phones */
+@media (max-width: 480px){
+
+  .hero{
+    padding: 50px 16px;
+  }
+
+  .hero h1{
+    font-size: 28px;
+  }
+
+  .hero p{
+    font-size: 14px;
+  }
+
+  .btnPrimary,
+  .btnGhost{
+    width: 100%;
+  }
+
+  .wrap{
+    padding: 14px;
+  }
+
+  .mediaBox{
+    height: 160px;
+  }
+
+  .title{
+    font-size: 14px;
+  }
+
+  .price{
+    font-size: 14px;
+  }
+
+  .desc{
+    font-size: 12px;
+  }
+
+  .contactLine{
+    font-size: 11px;
+  }
+}
+
       `}</style>
     </>
   );
