@@ -135,7 +135,7 @@ const WelcomeOnboarding = () => {
       /* HERO */
       .hero{
         background:linear-gradient(135deg, #0f766e, #16a34a);
-        padding:120px 20px;
+        padding: 70px 30px 70px 0px;
         color:white;
       }
 
@@ -149,7 +149,7 @@ const WelcomeOnboarding = () => {
       }
 
       .hero h1{
-        font-size:clamp(2rem,4vw,3rem);
+        font-size: 40px;
         white-space:nowrap;
       }
 

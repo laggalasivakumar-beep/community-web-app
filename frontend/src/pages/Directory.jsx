@@ -104,7 +104,7 @@ const Directory = () => {
         }
 
         .hero h1 {
-          font-size: 42px;
+          font-size: 40px;
           font-weight: bold;
         }
 
@@ -114,13 +114,16 @@ const Directory = () => {
         }
 
         .search-box input {
-          padding: 14px 20px;
-          width: 350px;
-          border-radius: 30px;
-          border: none;
-          font-size: 14px;
-          outline: none;
-        }
+  padding: 14px 20px;
+  width: 350px;
+  max-width: 100%;
+  box-sizing: border-box;
+  border-radius: 30px;
+  border: none;
+  font-size: 14px;
+  outline: none;
+}
+
 
         /* GRID */
         .grid {
@@ -226,9 +229,11 @@ const Directory = () => {
   }
 
   .grid{
-    padding:25px 5%;
-    gap:18px;
-  }
+  padding:20px;
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  gap:15px;
+}
+
 
 }
 
@@ -258,9 +263,11 @@ const Directory = () => {
   }
 
   .grid{
-    padding:25px 4%;
-    grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
-  }
+  padding:20px;
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  gap:15px;
+}
+
 
 }
 
@@ -295,11 +302,12 @@ const Directory = () => {
     font-size:13px;
   }
 
-  .grid{
-    padding:20px;
-    grid-template-columns:1fr 1fr;
-    gap:15px;
-  }
+  ..grid{
+  padding:20px;
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  gap:15px;
+}
+
 
   .imgWrap{
     height:150px;
@@ -331,9 +339,10 @@ const Directory = () => {
   }
 
   .grid{
-    grid-template-columns:1fr;
-    padding:15px;
-  }
+  padding:20px;
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  gap:15px;
+}
 
   .card{
     padding:12px;

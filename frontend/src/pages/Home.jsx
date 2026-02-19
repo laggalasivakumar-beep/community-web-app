@@ -94,7 +94,7 @@ const toEmbedUrl = (url = "") => {
         }
 
         .hero h1 {
-        font-size: 42px;
+        font-size: 40px;
         margin-bottom: 15px;
         padding-right: 20px;
 
@@ -220,21 +220,22 @@ const toEmbedUrl = (url = "") => {
   background: #ffffff;
   border-radius: 20px;
   overflow: hidden;
-  transition: all 0.4s ease;
+  transition: transform 0.1s ease, box-shadow 0.1s ease;  /* ✅ fast */
   box-shadow: 0 10px 30px rgba(0,0,0,0.08);
 }
 
-/* Rotating Animated Border */
+
+/* Simple Border (No Animation) */
 .feature-card::before {
   content: "";
   position: absolute;
   inset: -2px;
   border-radius: 22px;
-  background: linear-gradient(135deg, #0f766e, #16a34a);
-  background-size: 400%;
+  background: #16a34a;   /* ✅ single solid color */
   z-index: -1;
-  animation: borderRotate 3s linear infinite;
+  animation: none;       /* ✅ remove animation */
 }
+
 
 @keyframes borderRotate {
   0% { background-position: 0% 50%; }
@@ -294,6 +295,7 @@ const toEmbedUrl = (url = "") => {
 .feature-btn:hover {
   background: linear-gradient(45deg, #06b6d4, #6366f1);
   transform: scale(1.05);
+  color:white;
 }
 
 //* HOME JOBS SECTION (scoped - no impact on other sections) */
@@ -340,6 +342,7 @@ const toEmbedUrl = (url = "") => {
 .homejobs-more-btn:hover{
   background:#0f766e;
   transform: translateY(-2px);
+  color:white;
 }
 
 /* GRID like jobs page, but compact for home */
@@ -443,9 +446,9 @@ const toEmbedUrl = (url = "") => {
   transition: all 0.3s ease;
 }
 .homejobs-apply-btn:hover{
-  background:#2563eb;
+  background:linear-gradient(135deg, #0f766e, #16a34a);
   transform: scale(1.03);
-  color:#fff;
+  color:white;
 }
 
 /* responsive */
@@ -513,6 +516,7 @@ const toEmbedUrl = (url = "") => {
 .homedir-more-btn:hover{
   background:#0f766e;
   transform: translateY(-2px);
+  color:white;
 }
 
 /* GRID */
@@ -613,6 +617,8 @@ const toEmbedUrl = (url = "") => {
 .homedir-visit-btn:hover{
   transform: translateY(-2px);
   box-shadow: 0 6px 14px rgba(0,0,0,0.15);
+  background:linear-gradient(135deg, #0f766e, #16a34a);
+  color:white;
 }
 
 /* Responsive */
@@ -670,6 +676,7 @@ const toEmbedUrl = (url = "") => {
 .homecls-more-btn:hover{
   background:#0f766e;
   transform: translateY(-2px);
+  color:white;
 }
 
 /* GRID */
@@ -836,7 +843,8 @@ const toEmbedUrl = (url = "") => {
   background:#ff4b4b;
 }
 .homecls-btn.ghost:hover{
-  background:#ff4b4b;
+  background:linear-gradient(135deg, #0f766e, #16a34a);
+  color:white;
 }
 
 .homecls-empty{

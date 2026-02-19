@@ -219,12 +219,14 @@ const Classifieds = () => {
           color: #fff;
         }
         .heroInner{
-          max-width: 1100px;
-          margin: 0 auto;
-        }
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 15px;   /* ✅ add this */
+}
+
         .hero h1{
           margin: 0;
-          font-size: 44px;
+          font-size: 40px;
           letter-spacing: -0.5px;
         }
         .hero p{
@@ -299,12 +301,13 @@ const Classifieds = () => {
         .btnSmall:disabled{ opacity: 0.6; cursor: not-allowed; }
 
         .grid{
-          max-width: 1100px;
-          margin: 14px auto 0 auto;
-          display: grid;
-          grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
-          gap: 14px;
-        }
+  max-width: 1100px;
+  margin: 14px auto 0 auto;
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); /* ✅ 320 -> 300 */
+  gap: 14px;
+}
+
 
         .adCard{
           background: #fff;
@@ -476,7 +479,7 @@ const Classifieds = () => {
   }
 
   .grid{
-    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); /* ✅ auto-fit */
   }
 }
 
@@ -514,8 +517,9 @@ const Classifieds = () => {
     width: 100%;
   }
 
+  /* ✅ mobile lo squeeze avvakunda auto manage */
   .grid{
-    grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
   }
 
   .bottom{
@@ -553,6 +557,11 @@ const Classifieds = () => {
     padding: 14px;
   }
 
+  /* ✅ 480 below always single column */
+  .grid{
+    grid-template-columns: 1fr;
+  }
+
   .mediaBox{
     height: 160px;
   }
@@ -573,6 +582,7 @@ const Classifieds = () => {
     font-size: 11px;
   }
 }
+
 
       `}</style>
     </>

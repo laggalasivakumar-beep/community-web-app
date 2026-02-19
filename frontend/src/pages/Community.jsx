@@ -11,8 +11,7 @@ const Community = () => {
         <div className="community-hero-content">
           <h1>Community Conversations & Local Happenings</h1>
           <p>
-            Connect with neighbors, local groups, and events across Texas.
-            Share ideas, ask questions, and stay updated — all in one trusted space.
+            Connect with neighbors and local events — all in one trusted space.
           </p>
           <button
             className="community-cta"
@@ -105,7 +104,7 @@ const Community = () => {
       /* HERO */
       .community-hero{
         background:linear-gradient(135deg, #0f766e, #16a34a);
-        padding:120px 20px;
+        padding: 70px 30px 70px 0px;
         color:white;
       }
 
@@ -115,7 +114,7 @@ const Community = () => {
       }
 
       .community-hero h1{
-        font-size:clamp(2rem,4vw,3rem);
+        font-size:40px;
         white-space:nowrap;
       }
 
@@ -274,24 +273,8 @@ const Community = () => {
       }
 
       /* RESPONSIVE */
-      @media(max-width:900px){
-        .community-about{
-          grid-template-columns:1fr;
-        }
 
-        .community-hero-content{
-          margin-left:0;
-        }
-
-        .community-hero h1{
-          white-space:normal;
-        }
-
-        .cta-box{
-          padding:40px 25px;
-        }
-
-        /* ============================= */
+/* ============================= */
 /* LARGE TABLETS (1024px ↓)     */
 /* ============================= */
 @media (max-width: 1024px){
@@ -353,6 +336,18 @@ const Community = () => {
 
   .community-about-image{
     order:-1;
+  }
+
+  .community-hero-content{
+    margin-left:0;
+  }
+
+  .community-hero h1{
+    white-space:normal;
+  }
+
+  .cta-box{
+    padding:40px 25px;
   }
 
   .community-cards{
@@ -473,18 +468,6 @@ const Community = () => {
   .community-card img{
     height:160px;
   }
-
-  .cta-box{
-    padding:30px 15px;
-  }
-
-  .cta-box h2{
-    font-size:1.4rem;
-  }
-
-}
-
-      }
 
       
 

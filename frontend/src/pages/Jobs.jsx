@@ -1,7 +1,10 @@
 import { useEffect, useState } from "react";
 import supabase from "../config/supabaseClient";
+import { useNavigate } from "react-router-dom";
+
 
 const Jobs = () => {
+  const navigate = useNavigate();
   const [jobs, setJobs] = useState([]);
   const [searchTerm, setSearchTerm] = useState(""); // 👈 paste here
 
@@ -26,23 +29,35 @@ const Jobs = () => {
 );
 
   return (
+    
     <div className="jobs-wrapper">
 
-      {/* HERO SECTION */}
-      <div className="jobs-hero">
-        <h1>Find Your Dream Job</h1>
-        <p>Explore verified opportunities, filter by title, and apply instantly from our trusted job portal.</p>
-      </div>
+  {/* HERO SECTION */}
+  <div className="jobs-hero">
+    <h1>Find Your Dream Job</h1>
+    <p>
+      Explore verified opportunities, filter by title, and apply instantly from our trusted job portal.
+    </p>
 
-      <div className="jobs-search">
-  <i className="fa-solid fa-magnifying-glass"></i>
-  <input
-    type="text"
-    placeholder="Search jobs by title..."
-    value={searchTerm}
-    onChange={(e) => setSearchTerm(e.target.value)}
-  />
-</div>
+    {/* ✅ Added Button */}
+    <button
+      className="hero-auth-btn"
+      onClick={() => navigate("/login")}
+    >
+      Login / Register
+    </button>
+  </div>
+
+  <div className="jobs-search">
+    <i className="fa-solid fa-magnifying-glass"></i>
+    <input
+      type="text"
+      placeholder="Search jobs by title..."
+      value={searchTerm}
+      onChange={(e) => setSearchTerm(e.target.value)}
+    />
+  </div>
+
       <div className="jobs-grid">
         {filteredJobs.map((job, index) => (
 
@@ -105,6 +120,28 @@ const Jobs = () => {
       {/* ADVANCED CSS */}
       <style>{`
       /* HERO SECTION */
+
+      .jobs-hero h1 {
+  margin-bottom: 8px;   /* small gap between heading & paragraph */
+}
+
+.hero-auth-btn {
+  margin-top: 18px;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 10px;
+  background: white;
+  color: #0f766e;
+  font-weight: 600;
+  cursor: pointer;
+  transition: 0.3s ease;
+}
+
+.hero-auth-btn:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 10px 25px rgba(0,0,0,0.2);
+}
+
 .jobs-hero {
   width: 100vw; /* full viewport width */
   margin-left: calc(-50vw + 50%); /* stretch full width while keeping content centered */
@@ -118,15 +155,11 @@ const Jobs = () => {
   position: relative;
   overflow: hidden;
 }
-
-        .jobs-wrapper {
-          padding: 30px;
-        }
-
         .jobs-grid {
           display: grid;
           grid-template-columns: repeat(4, 1fr);
           gap: 24px;
+          margin: 60px;
         }
 
         /* CARD */
@@ -255,7 +288,7 @@ const Jobs = () => {
   align-items: center;
   gap: 10px;
   max-width: 420px;
-  margin-bottom: 25px;
+  margin: 25px 5px 25px 70px;
   padding: 10px 14px;
   border-radius: 12px;
   background: #ffffff;
